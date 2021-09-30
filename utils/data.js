@@ -1,6 +1,7 @@
-const data = {
+const dataStore = {
   products: [
     {
+      id: 1,
       name: 'Free Shirt',
       category: 'Shirts',
       image: '/images/shirt1.jpg',
@@ -12,6 +13,7 @@ const data = {
       description: 'A popular shirt',
     },
     {
+      id: 2,
       name: 'Fit Shirt',
       category: 'Shirts',
       image: '/images/shirt2.jpg',
@@ -23,6 +25,7 @@ const data = {
       description: 'A popular shirt',
     },
     {
+      id: 3,
       name: 'Slim Shirt',
       category: 'Shirts',
       image: '/images/shirt3.jpg',
@@ -34,6 +37,7 @@ const data = {
       description: 'A popular shirt',
     },
     {
+      id: 4,
       name: 'Golf Pants',
       category: 'Pants',
       image: '/images/pants1.jpg',
@@ -45,6 +49,7 @@ const data = {
       description: 'Smart looking pants',
     },
     {
+      id: 5,
       name: 'Fit pants',
       category: 'Pants',
       image: '/images/pants2.jpg',
@@ -56,6 +61,7 @@ const data = {
       description: 'Popular pants',
     },
     {
+      id: 6,
       name: 'Classic pants',
       category: 'Pants',
       image: '/images/pants3.jpg',
@@ -69,4 +75,4 @@ const data = {
   ],
 };
 
-export default data;
+export default dataStore;
