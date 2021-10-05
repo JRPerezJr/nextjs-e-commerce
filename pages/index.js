@@ -8,7 +8,7 @@ import {
   CardMedia,
   Grid,
   Typography,
-} from '@mui/material';
+} from '@material-ui/core';
 import Layout from '../components/Layout';
 import dataStore from '../utils/data';
 

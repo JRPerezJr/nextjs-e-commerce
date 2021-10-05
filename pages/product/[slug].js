@@ -12,7 +12,7 @@ import {
   List,
   ListItem,
   Typography,
-} from '@mui/material';
+} from '@material-ui/core';
 import useStyles from '../../utils/styles';
 
 export default function ProductScreen() {

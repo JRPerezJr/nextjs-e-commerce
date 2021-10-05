@@ -3,16 +3,17 @@ import Head from 'next/head';
 import NextLink from 'next/link';
 
 import {
+  createTheme,
   AppBar,
   Container,
   CssBaseline,
   Link,
   Switch,
+  ThemeProvider,
   Toolbar,
   Typography,
-} from '@mui/material';
+} from '@material-ui/core';
 
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 import useStyles from '../utils/styles';
 import { Store } from '../utils/Store';
 import Cookies from 'js-cookie';
@@ -38,7 +39,7 @@ export default function Layout({ title, description, children }) {
       },
     },
     palette: {
-      mode: darkMode ? 'dark' : 'light',
+      type: darkMode ? 'dark' : 'light',
 
       primary: {
         main: '#f0c000',
