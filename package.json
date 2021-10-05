@@ -1,7 +1,18 @@
 {
-  "name": "fashon",
-  "version": "0.1.0",
+  "name": "fashion-monsta",
   "private": true,
+  "version": "0.1.0",
+  "author": {
+    "name": "Juan",
+    "email": "pront23@gmail.com"
+  },
+  "license": "MIT",
+  "description": "A Next.js E Commerce App",
+  "engines": {
+    "node": "14.17.0",
+    "npm": "6.14.13",
+    "yarn": "1.22.10"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

@@ -1,34 +1,77 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center">Next.js E Commerce App</h1>
 
-## Getting Started
+![fashion_monsta](https://user-images.githubusercontent.com/19915910/135954393-7109b159-bbe5-4dd6-89fc-5dc3eaa06595.png)
 
-First, run the development server:
+<br>
 
-```bash
-npm run dev
-# or
-yarn dev
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+  <img src="https://img.shields.io/badge/node-14.17.0-blue.svg" />
+  <img src="https://img.shields.io/badge/npm-6.14.13-blue.svg" />
+  <a href="https://github.com/JRPerezJr/nextjs-e-commerce#readme" target="_blank">
+    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
+  </a>
+  <a href="https://github.com/JRPerezJr/nextjs-e-commerce/graphs/commit-activity" target="_blank">
+    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
+  </a>
+  <a href="https://github.com/JRPerezJr/nextjs-e-commerce/blob/main/license.txt" target="_blank">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
+  </a>
+</p>
+
+<br>
+
+> A Next.js e commerce project.
+
+## 📐 Prerequisites
+
+- Git
+- node 14.17.0
+- npm 6.14.13
+- yarn 1.22.10
+
+## 🖥 📱 💽 Tech Stack
+
+**Client:** Next.js
+
+## 🛠 Install and Run Locally
+
+Clone the project
+
+```shell
+  git clone https://github.com/JRPerezJr/nextjs-e-commerce.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Go to the project directory
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+```shell
+  cd nextjs-e-commerce
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Install dependencies with yarn or npm
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```shell
+yarn
+npm install
+```
 
-## Learn More
+## 👩‍💻 👨‍💻 Usage
 
-To learn more about Next.js, take a look at the following resources:
+```shell
+yarn dev
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠 Build optimized version
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```shell
+yarn build
+npm run build
+```
 
-## Deploy on Vercel
+## 📓 Author
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![Logo](https://user-images.githubusercontent.com/19915910/120965966-81203b00-c7a0-11eb-8ef4-a42c0642db4c.png)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Github: [@JRPerezJr](https://github.com/JRPerezJr)
+- LinkedIn: [@devjperez](https://linkedin.com/in/devjperez)
