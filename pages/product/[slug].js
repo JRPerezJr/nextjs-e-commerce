@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import NextLink from 'next/link';
 import Image from 'next/image';
+
+import db from '../../utils/db';
+import Product from '../../models/Product';
+import { StoreContext } from '../../utils/Store';
 
 import Layout from '../../components/Layout';
 import {
@@ -13,10 +17,9 @@ import {
   Typography,
 } from '@mui/material';
 import useStyles from '../../utils/styles';
-import db from '../../utils/db';
-import Product from '../../models/Product';
 
 export default function ProductScreen(props) {
+  const { dispatch } = useContext(StoreContext);
   const { product } = props;
 
   const classes = useStyles();
@@ -28,6 +31,23 @@ export default function ProductScreen(props) {
       </div>
     );
   }
+
+  const addToCartHandler = () => {
+    fetch(`/api/products/${product._id}`, {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.countInStock <= 0) {
+          window.alert('Sorry. The product is currently out of stock');
+          return;
+        }
+      });
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity: 1 } });
+  };
   return (
     <Layout title={product.name} description={product.description}>
       <div className={classes.section}>
@@ -99,7 +119,12 @@ export default function ProductScreen(props) {
                 </Grid>
               </ListItem>
               <ListItem>
-                <Button fullWidth variant="contained" color="primary">
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  onClick={addToCartHandler}
+                >
                   Add to cart
                 </Button>
               </ListItem>
