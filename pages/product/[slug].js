@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useRouter } from 'next/router';
 import NextLink from 'next/link';
 import Image from 'next/image';
 
@@ -19,6 +20,7 @@ import {
 import useStyles from '../../utils/styles';
 
 export default function ProductScreen(props) {
+  const router = useRouter();
   const { dispatch } = useContext(StoreContext);
   const { product } = props;
 
@@ -47,6 +49,7 @@ export default function ProductScreen(props) {
         }
       });
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity: 1 } });
+    router.push('/cart');
   };
   return (
     <Layout title={product.name} description={product.description}>
