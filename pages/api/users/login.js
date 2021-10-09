@@ -20,7 +20,7 @@ handler.post(async (req, res) => {
       isAdmin: user.isAdmin,
     });
   } else {
-    res.statusCode(401).send({ message: 'Failure to authenticate' });
+    res.status(401).send({ message: 'Failure to authenticate' });
   }
 });
 
