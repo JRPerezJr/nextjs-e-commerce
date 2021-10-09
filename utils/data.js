@@ -1,4 +1,20 @@
+import bcrypt from 'bcryptjs';
+
 const dataStore = {
+  users: [
+    {
+      name: 'James',
+      email: 'jbond@jbond.com',
+      password: bcrypt.hashSync('licenseToKill'),
+      isAdmin: true,
+    },
+    {
+      name: 'Vesper',
+      email: 'vesper@vesper.com',
+      password: bcrypt.hashSync('manageYourMoneyWell'),
+      isAdmin: false,
+    },
+  ],
   products: [
     {
       slug: 'free-shirt',
