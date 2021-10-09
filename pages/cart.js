@@ -25,8 +25,10 @@ import {
 import Layout from '../components/Layout';
 
 import { StoreContext } from '../utils/Store';
+import { useRouter } from 'next/router';
 
 function CartScreen() {
+  const router = useRouter();
   const { state, dispatch } = useContext(StoreContext);
   const {
     cart: { cartItems },
@@ -52,6 +54,8 @@ function CartScreen() {
   const removeItemHandler = (item) => {
     dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
   };
+
+  const checkOutHandler = () => router.push('/shipping');
 
   return (
     <Layout title="Shopping Cart">
@@ -143,7 +147,12 @@ function CartScreen() {
                   </Typography>
                 </ListItem>
                 <ListItem>
-                  <Button variant="contained" color="primary" fullWidth>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    onClick={checkOutHandler}
+                  >
                     Check Out
                   </Button>
                 </ListItem>
