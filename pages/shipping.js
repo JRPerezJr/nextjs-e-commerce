@@ -11,7 +11,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { Button, List, ListItem, TextField, Typography } from '@mui/material';
 import Layout from '../components/Layout';
 import useStyles from '../utils/styles';
-import CheckoutWizard from '../components/checkoutWizard';
+import CheckoutWizard from '../components/CheckoutWizard';
 
 export default function Shipping() {
   const {
