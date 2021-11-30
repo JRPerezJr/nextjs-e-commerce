@@ -1,19 +1,42 @@
 import '../styles/globals.css';
-import { useEffect } from 'react';
+
+// import { useEffect } from 'react';
+import PropTypes from 'prop-types';
+
+import { CacheProvider } from '@emotion/react';
+import createEmotionCache from '../components/createEmotionCache';
+
+import { ToggleColorMode } from '../utils/ColorMode';
 import { StoreProvider } from '../utils/Store';
 
-function MyApp({ Component, pageProps }) {
-  useEffect(() => {
-    const jssStyles = document.querySelector('#jss-server-side');
-    if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles);
-    }
-  }, []);
+// Client-side cache, shared for the whole session of the user in the browser.
+const clientSideEmotionCache = createEmotionCache();
+
+function MyApp(props) {
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+
+  // useEffect(() => {
+  //   const jssStyles = document.querySelector('#jss-server-side');
+  //   if (jssStyles) {
+  //     jssStyles.parentElement.removeChild(jssStyles);
+  //   }
+  // }, []);
+
   return (
-    <StoreProvider>
-      <Component {...pageProps} />
-    </StoreProvider>
+    <CacheProvider value={emotionCache}>
+      <ToggleColorMode>
+        <StoreProvider>
+          <Component {...pageProps} />
+        </StoreProvider>
+      </ToggleColorMode>
+    </CacheProvider>
   );
 }
 
 export default MyApp;
+
+MyApp.propTypes = {
+  Component: PropTypes.elementType.isRequired,
+  emotionCache: PropTypes.object,
+  pageProps: PropTypes.object.isRequired,
+};
