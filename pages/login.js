@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 import Layout from '../components/Layout';
 import useStyles from '../utils/styles';
+import { useSnackbar } from 'notistack';
 
 export default function Login() {
   const {
@@ -26,6 +27,8 @@ export default function Login() {
     control,
     formState: { errors },
   } = useForm();
+
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const router = useRouter();
   const { redirect } = router.query;
@@ -42,6 +45,8 @@ export default function Login() {
   const classes = useStyles();
 
   const submitHandler = async ({ email, password }) => {
+    closeSnackbar();
+
     try {
       const formData = { email, password };
       const response = await fetch(`/api/users/login`, {
@@ -53,7 +58,7 @@ export default function Login() {
         body: JSON.stringify(formData),
       });
       if (response.status !== 200) {
-        return alert('Authentication Failure');
+        return enqueueSnackbar('Authentication Failure', { variant: 'error' });
       } else {
         const data = await response.json();
         dispatch({ type: 'USER_LOGIN', payload: data });
