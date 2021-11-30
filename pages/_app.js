@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import { CacheProvider } from '@emotion/react';
 import createEmotionCache from '../components/createEmotionCache';
 
+import { SnackbarProvider } from 'notistack';
+
 import { ToggleColorMode } from '../utils/ColorMode';
 import { StoreProvider } from '../utils/Store';
 
@@ -24,11 +26,15 @@ function MyApp(props) {
 
   return (
     <CacheProvider value={emotionCache}>
-      <ToggleColorMode>
-        <StoreProvider>
-          <Component {...pageProps} />
-        </StoreProvider>
-      </ToggleColorMode>
+      <SnackbarProvider
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <ToggleColorMode>
+          <StoreProvider>
+            <Component {...pageProps} />
+          </StoreProvider>
+        </ToggleColorMode>
+      </SnackbarProvider>
     </CacheProvider>
   );
 }
