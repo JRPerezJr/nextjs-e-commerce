@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
+import { StoreContext } from '../utils/Store';
+
+import { useRouter } from 'next/router';
 import NextLink from 'next/link';
+
+import Cookies from 'js-cookie';
 
 import {
   Button,
@@ -14,6 +19,18 @@ import Layout from '../components/Layout';
 import useStyles from '../utils/styles';
 
 export default function Login() {
+  const router = useRouter();
+  const { redirect } = router.query;
+
+  const { state, dispatch } = useContext(StoreContext);
+  const { userInfo } = state;
+
+  useEffect(() => {
+    if (userInfo) {
+      router.push('/');
+    }
+  }, []);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -22,18 +39,23 @@ export default function Login() {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const data = { email, password };
+      const formData = { email, password };
       const response = await fetch(`/api/users/login`, {
         method: 'POST',
+        credentials: 'same-origin',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(formData),
       });
       if (response.status !== 200) {
         return alert('Authentication Failure');
       } else {
-        return alert('Success');
+        const data = await response.json();
+        dispatch({ type: 'USER_LOGIN', payload: data });
+        Cookies.set('userInfo', data);
+        router.push(redirect || '/');
+        return;
       }
     } catch (error) {
       console.log('Backend failure');
@@ -76,7 +98,7 @@ export default function Login() {
           </ListItem>
           <ListItem>
             Don't have an account? &nbsp;
-            <NextLink href="/register" passHref>
+            <NextLink href={`/register?redirect=${redirect || '/'}`} passHref>
               <Link>Register</Link>
             </NextLink>
           </ListItem>
