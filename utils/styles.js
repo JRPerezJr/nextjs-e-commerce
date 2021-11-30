@@ -21,6 +21,7 @@ const useStyles = makeStyles({
   },
   footer: {
     textAlign: 'center',
+    padding: 20,
   },
   section: {
     marginTop: 10,
