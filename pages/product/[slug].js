@@ -1,9 +1,13 @@
 import React from 'react';
 import NextLink from 'next/link';
 import Image from 'next/image';
+
 import { useRouter } from 'next/router';
+
 import dataStore from '../../utils/data';
+
 import Layout from '../../components/Layout';
+
 import {
   Button,
   Card,
@@ -13,6 +17,7 @@ import {
   ListItem,
   Typography,
 } from '@material-ui/core';
+
 import useStyles from '../../utils/styles';
 
 export default function ProductScreen() {
