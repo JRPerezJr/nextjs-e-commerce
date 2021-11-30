@@ -25,17 +25,15 @@ function MyApp(props) {
   // }, []);
 
   return (
-    <CacheProvider value={emotionCache}>
-      <SnackbarProvider
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      >
+    <SnackbarProvider anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+      <CacheProvider value={emotionCache}>
         <ToggleColorMode>
           <StoreProvider>
             <Component {...pageProps} />
           </StoreProvider>
         </ToggleColorMode>
-      </SnackbarProvider>
-    </CacheProvider>
+      </CacheProvider>
+    </SnackbarProvider>
   );
 }
 
