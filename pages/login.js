@@ -9,6 +9,8 @@ import Cookies from 'js-cookie';
 
 import { Controller, useForm } from 'react-hook-form';
 
+import { useSnackbar } from 'notistack';
+
 import {
   Button,
   Link,
@@ -19,7 +21,6 @@ import {
 } from '@mui/material';
 import Layout from '../components/Layout';
 import useStyles from '../utils/styles';
-import { useSnackbar } from 'notistack';
 
 export default function Login() {
   const {
