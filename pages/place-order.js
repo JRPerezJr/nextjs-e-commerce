@@ -1,8 +1,13 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import NextLink from 'next/link';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
+import router from 'next/router';
+
+import { StoreContext } from '../utils/Store';
+
+import { useSnackbar } from 'notistack';
 
 import {
   Card,
@@ -18,20 +23,28 @@ import {
   List,
   Button,
   ListItem,
+  CircularProgress,
 } from '@mui/material';
 
-import Layout from '../components/Layout';
-
-import { StoreContext } from '../utils/Store';
 import useStyles from '../utils/styles';
+
+import Layout from '../components/Layout';
 import CheckoutWizard from '../components/CheckoutWizard';
-import router from 'next/router';
+
+import { getError } from '../utils/error';
+
+import Cookies from 'js-cookie';
 
 function PlaceOrder() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const classes = useStyles;
+
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const { state, dispatch } = useContext(StoreContext);
   const {
+    userInfo,
     cart: { cartItems, shippingAddress, paymentMethod },
   } = state;
 
@@ -54,7 +67,47 @@ function PlaceOrder() {
     if (!paymentMethod) {
       router.push('/payment');
     }
+    if (cartItems.length === 0) {
+      router.push('/cart');
+    }
   }, []);
+
+  const placeOrderHandler = async () => {
+    closeSnackbar();
+
+    try {
+      setIsLoading(true);
+      const response = await fetch('/api/orders', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${userInfo.token}`,
+        },
+        body: JSON.stringify({
+          orderItems: cartItems,
+          shippingAddress,
+          paymentMethod,
+          subtotal,
+          shippingCost,
+          taxPrice,
+          totalPrice,
+        }),
+      });
+
+      const data = await response.json();
+
+      dispatch({ type: 'CART_CLEAR' });
+      Cookies.remove('cartItems');
+
+      setIsLoading(false);
+
+      router.push(`/order/${data._id}`);
+    } catch (error) {
+      setIsLoading(false);
+      enqueueSnackbar(getError(error), { variant: 'error' });
+    }
+  };
 
   return (
     <Layout title="Place Order">
@@ -211,10 +264,20 @@ function PlaceOrder() {
               </ListItem>
 
               <ListItem>
-                <Button variant="contained" color="primary" fullWidth>
+                <Button
+                  onClick={placeOrderHandler}
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                >
                   Place Order
                 </Button>
               </ListItem>
+              {isLoading && (
+                <ListItem>
+                  <CircularProgress />
+                </ListItem>
+              )}
             </List>
           </Card>
         </Grid>
