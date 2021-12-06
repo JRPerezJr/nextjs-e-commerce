@@ -30,7 +30,7 @@ function MyApp(props) {
       <CacheProvider value={emotionCache}>
         <ToggleColorMode>
           <StoreProvider>
-            <PayPalScriptProvider>
+            <PayPalScriptProvider deferLoading={true}>
               <Component {...pageProps} />
             </PayPalScriptProvider>
           </StoreProvider>
