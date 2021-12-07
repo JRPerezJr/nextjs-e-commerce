@@ -33,12 +33,10 @@ import CheckoutWizard from '../components/CheckoutWizard';
 
 import { getError } from '../utils/error';
 
-import Cookies from 'js-cookie';
-
 function PlaceOrder() {
   const [isLoading, setIsLoading] = useState(false);
 
-  const classes = useStyles;
+  const classes = useStyles();
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -98,7 +96,6 @@ function PlaceOrder() {
       const data = await response.json();
 
       dispatch({ type: 'CART_CLEAR' });
-      Cookies.remove('cartItems');
 
       setIsLoading(false);
 
