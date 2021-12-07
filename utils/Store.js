@@ -1,5 +1,8 @@
 import { createContext, useReducer } from 'react';
+
 import Cookies from 'js-cookie';
+
+import { parseData, stringifyData } from '.';
 
 export const StoreContext = createContext();
 
@@ -8,19 +11,16 @@ const initialState = {
   // darkMode: Cookies.get('darkMode') === 'ON' ? true : false,
   cart: {
     cartItems: Cookies.get('cartItems')
-      ? JSON.parse(Cookies.get('cartItems'))
+      ? parseData(Cookies.get('cartItems'))
       : [],
-
     shippingAddress: Cookies.get('shippingAddress')
-      ? JSON.parse(Cookies.get('shippingAddress'))
+      ? parseData(Cookies.get('shippingAddress'))
       : {},
     paymentMethod: Cookies.get('paymentMethod')
-      ? JSON.parse(Cookies.get('paymentMethod'))
+      ? Cookies.get('paymentMethod')
       : '',
   },
-  userInfo: Cookies.get('userInfo')
-    ? JSON.parse(Cookies.get('userInfo'))
-    : null,
+  userInfo: Cookies.get('userInfo') ? parseData(Cookies.get('userInfo')) : null,
 };
 
 function reducer(state, action) {
@@ -41,7 +41,7 @@ function reducer(state, action) {
             item.name === existentItem.name ? newItem : item
           )
         : [...state.cart.cartItems, newItem];
-      Cookies.set('cartItems', JSON.stringify(cartItems));
+      Cookies.set('cartItems', stringifyData(cartItems));
 
       return { ...state, cart: { ...state.cart, cartItems } };
 
@@ -49,11 +49,13 @@ function reducer(state, action) {
       const cartItems = state.cart.cartItems.filter(
         (item) => item._id !== action.payload._id
       );
-      Cookies.set('cartItems', JSON.stringify(cartItems));
+      Cookies.set('cartItems', stringifyData(cartItems));
       return { ...state, cart: { ...state.cart, cartItems } };
     }
 
     case 'CART_CLEAR':
+      Cookies.remove('cartItems');
+
       return {
         ...state,
         cart: {
@@ -65,9 +67,14 @@ function reducer(state, action) {
       };
 
     case 'USER_LOGIN':
+      Cookies.set('userInfo', stringifyData(action.payload));
       return { ...state, userInfo: action.payload };
 
     case 'USER_LOGOUT':
+      Cookies.remove('userInfo');
+      Cookies.remove('cartItems');
+      Cookies.remove('paymentMethod');
+      Cookies.remove('shippingAddress');
       return {
         ...state,
         userInfo: null,
@@ -75,12 +82,14 @@ function reducer(state, action) {
       };
 
     case 'SAVE_SHIPPING_ADDRESS':
+      Cookies.set('shippingAddress', stringifyData(action.payload));
       return {
         ...state,
         cart: { ...state.cart, shippingAddress: action.payload },
       };
 
     case 'SAVE_PAYMENT_METHOD':
+      Cookies.set('paymentMethod', action.payload);
       return {
         ...state,
         cart: { ...state.cart, paymentMethod: action.payload },
