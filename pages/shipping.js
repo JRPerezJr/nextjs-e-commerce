@@ -4,8 +4,6 @@ import { StoreContext } from '../utils/Store';
 
 import { useRouter } from 'next/router';
 
-import Cookies from 'js-cookie';
-
 import { Controller, useForm } from 'react-hook-form';
 
 import { Button, List, ListItem, TextField, Typography } from '@mui/material';
@@ -64,14 +62,7 @@ export default function Shipping() {
         country,
       },
     });
-    Cookies.set('shippingAddress', {
-      fullName,
-      address,
-      city,
-      homeState,
-      zipCode,
-      country,
-    });
+
     router.push('/payment');
   };
 
