@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 
 import { ColorModeContext } from '../utils/ColorMode';
 import { StoreContext } from '../utils/Store';
-import Cookies from 'js-cookie';
 
 import {
   AppBar,
@@ -88,8 +87,7 @@ export default function Layout({ title, description, children }) {
   const logoutClickHandler = () => {
     setAnchorEl(null);
     dispatch({ type: 'USER_LOGOUT' });
-    Cookies.remove('userInfo');
-    Cookies.remove('cartItems');
+
     router.push('/');
   };
 
