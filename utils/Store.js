@@ -7,8 +7,7 @@ import { parseData, stringifyData } from '.';
 export const StoreContext = createContext();
 
 const initialState = {
-  darkMode: false,
-  // darkMode: Cookies.get('darkMode') === 'ON' ? true : false,
+  darkMode: Cookies.get('darkMode') === 'ON' ? true : false,
   cart: {
     cartItems: Cookies.get('cartItems')
       ? parseData(Cookies.get('cartItems'))
