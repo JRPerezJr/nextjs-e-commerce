@@ -1,10 +1,9 @@
 import '../styles/globals.css';
 
-// import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { CacheProvider } from '@emotion/react';
-import createEmotionCache from '../components/createEmotionCache';
+import createEmotionCache from '../utils/createEmotionCache';
 
 import { SnackbarProvider } from 'notistack';
 
@@ -18,16 +17,11 @@ const clientSideEmotionCache = createEmotionCache();
 function MyApp(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
-  // useEffect(() => {
-  //   const jssStyles = document.querySelector('#jss-server-side');
-  //   if (jssStyles) {
-  //     jssStyles.parentElement.removeChild(jssStyles);
-  //   }
-  // }, []);
-
   return (
-    <SnackbarProvider anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-      <CacheProvider value={emotionCache}>
+    <CacheProvider value={emotionCache}>
+      <SnackbarProvider
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
         <ToggleColorMode>
           <StoreProvider>
             <PayPalScriptProvider deferLoading={true}>
@@ -35,8 +29,8 @@ function MyApp(props) {
             </PayPalScriptProvider>
           </StoreProvider>
         </ToggleColorMode>
-      </CacheProvider>
-    </SnackbarProvider>
+      </SnackbarProvider>
+    </CacheProvider>
   );
 }
 
