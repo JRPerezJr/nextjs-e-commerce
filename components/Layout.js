@@ -1,16 +1,15 @@
 import React, { useContext, useState } from 'react';
+
 import Head from 'next/head';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
+import router from 'next/router';
 
-import { ColorModeContext } from '../utils/ColorMode';
 import { StoreContext } from '../utils/Store';
 
 import {
   AppBar,
   Container,
   Link,
-  // Switch,
   Toolbar,
   Typography,
   Badge,
@@ -24,21 +23,25 @@ import IconButton from '@mui/material/IconButton';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
-import CssBaseline from '@mui/material/CssBaseline';
-import { useTheme, createTheme, ThemeProvider } from '@mui/material/styles';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import { createTheme } from '@mui/material/styles';
 
-import useStyles from '../utils/styles';
+import Cookies from 'js-cookie';
+import { Box } from '@mui/system';
+import classes from '../utils/classes';
 
 export default function Layout({ title, description, children }) {
-  const router = useRouter();
-
-  const nightTheme = useTheme();
-  const colorMode = useContext(ColorModeContext);
-
   const { state, dispatch } = useContext(StoreContext);
-  const { cart, userInfo } = state;
+  const { cart, darkMode, userInfo } = state;
 
   const theme = createTheme({
+    components: {
+      MuiLink: {
+        defaultProps: {
+          underline: 'hover',
+        },
+      },
+    },
     typography: {
       h1: {
         fontSize: '1.6rem',
@@ -50,13 +53,9 @@ export default function Layout({ title, description, children }) {
         fontWeight: 400,
         margin: '1rem 0',
       },
-      body1: {
-        fontWeight: 'normal',
-      },
     },
     palette: {
-      mode: nightTheme.palette.mode === 'light' ? 'dark' : 'light',
-
+      mode: darkMode ? 'dark' : 'light',
       primary: {
         main: '#f0c000',
       },
@@ -65,14 +64,12 @@ export default function Layout({ title, description, children }) {
       },
     },
   });
-  const classes = useStyles();
 
-  // const darkModeChangeHandler = () => {
-  // console.log('Clicked');
-  // dispatch({ type: darkMode ? 'DARK_MODE_OFF' : 'DARK_MODE_ON' });
-  // const newDarkMode = !darkMode;
-  // Cookies.set('darkMode', newDarkMode ? 'ON' : 'OFF', { sameSite: 'strict' });
-  // };
+  const darkModeChangeHandler = () => {
+    dispatch({ type: darkMode ? 'DARK_MODE_OFF' : 'DARK_MODE_ON' });
+    const newDarkMode = !darkMode;
+    Cookies.set('darkMode', newDarkMode ? 'ON' : 'OFF');
+  };
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -96,40 +93,30 @@ export default function Layout({ title, description, children }) {
   };
 
   return (
-    <div>
+    <>
       <Head>
         <title>{title ? `${title} - Fashion Monsta` : 'Fashion Monsta'}</title>
         {description && <meta name="description" content={description}></meta>}
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <AppBar position="static" className={classes.navbar}>
-          <Toolbar>
+        <AppBar position="static" sx={classes.navbar}>
+          <Toolbar sx={classes.toolbar}>
             <NextLink href="/" passHref>
               <Link>
-                <Typography className={classes.brand}>
-                  Fashion Monsta
-                </Typography>
+                <Typography sx={classes.brand}>Fashion Monsta</Typography>
               </Link>
             </NextLink>
-            <div className={classes.grow}></div>
-            <div>
-              {/* <Switch
-                checked={darkMode}
-                onChange={darkModeChangeHandler}
-                inputProps={{ 'aria-label': 'controlled' }}
-              ></Switch> */}
+
+            <Box>
               <IconButton
                 sx={{ ml: 1 }}
-                onClick={colorMode.toggleColorMode}
+                onClick={darkModeChangeHandler}
                 color="inherit"
               >
-                {nightTheme.palette.mode === 'dark' ? (
-                  <Brightness4Icon />
-                ) : (
-                  <Brightness7Icon />
-                )}
+                {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
               </IconButton>
+
               <NextLink href="/cart" passHref>
                 <Link>
                   {cart.cartItems.length > 0 ? (
@@ -150,7 +137,7 @@ export default function Layout({ title, description, children }) {
                     aria-controls="simple-menu"
                     aria-haspopup="true"
                     onClick={loginClickHandler}
-                    className={classes.navbarButton}
+                    sx={classes.navbarButton}
                   >
                     {userInfo.name}
                   </Button>
@@ -181,14 +168,14 @@ export default function Layout({ title, description, children }) {
                   <Link>Login</Link>
                 </NextLink>
               )}
-            </div>
+            </Box>
           </Toolbar>
         </AppBar>
-        <Container className={classes.main}>{children}</Container>
-        <footer className={classes.footer}>
+        <Container sx={classes.main}>{children}</Container>
+        <Box component="footer" sx={classes.footer}>
           <Typography>All rights reserved. Next Fashion Monsta</Typography>
-        </footer>
+        </Box>
       </ThemeProvider>
-    </div>
+    </>
   );
 }
