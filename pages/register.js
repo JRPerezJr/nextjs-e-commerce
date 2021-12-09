@@ -5,8 +5,6 @@ import { StoreContext } from '../utils/Store';
 import { useRouter } from 'next/router';
 import NextLink from 'next/link';
 
-import Cookies from 'js-cookie';
-
 import { Controller, useForm } from 'react-hook-form';
 
 import { useSnackbar } from 'notistack';
@@ -39,7 +37,7 @@ export default function Register() {
 
   useEffect(() => {
     if (userInfo) {
-      router.push('/');
+      return router.push('/');
     }
   }, []);
 
@@ -49,8 +47,7 @@ export default function Register() {
     closeSnackbar();
 
     if (password !== confirmPassword) {
-      enqueueSnackbar('Passwords must match', { variant: 'error' });
-      return;
+      return enqueueSnackbar('Passwords must match', { variant: 'error' });
     }
     try {
       const formData = { name, email, password };
@@ -67,7 +64,7 @@ export default function Register() {
       } else {
         const data = await response.json();
         dispatch({ type: 'USER_LOGIN', payload: data });
-        Cookies.set('userInfo', data);
+
         router.push(redirect || '/');
       }
     } catch (error) {

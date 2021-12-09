@@ -48,11 +48,10 @@ export default function ProductScreen(props) {
         );
         const quantity = itemExists ? itemExists.quantity + 1 : 1;
         if (data.countInStock < quantity) {
-          window.alert('Sorry. The product is currently out of stock');
-          return;
+          return window.alert('Sorry. The product is currently out of stock');
         }
         dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
-        router.push('/cart');
+        return router.push('/cart');
       });
   };
   return (

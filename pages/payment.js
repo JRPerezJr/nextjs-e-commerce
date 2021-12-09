@@ -37,7 +37,7 @@ const Payment = () => {
 
   useEffect(() => {
     if (!shippingAddress.address) {
-      router.push('/shipping');
+      return router.push('/shipping');
     } else {
       setPaymentMethod(Cookies.get('paymentMethod') || '');
     }
@@ -52,7 +52,7 @@ const Payment = () => {
       enqueueSnackbar('Payment method is required', { variant: 'error' });
     } else {
       dispatch({ type: 'SAVE_PAYMENT_METHOD', payload: paymentMethod });
-      Cookies.set('paymentMethod', paymentMethod);
+
       router.push('/place-order');
     }
   };

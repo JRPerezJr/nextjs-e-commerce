@@ -5,8 +5,6 @@ import { StoreContext } from '../utils/Store';
 import { useRouter } from 'next/router';
 import NextLink from 'next/link';
 
-import Cookies from 'js-cookie';
-
 import { Controller, useForm } from 'react-hook-form';
 
 import { useSnackbar } from 'notistack';
@@ -39,7 +37,7 @@ export default function Login() {
 
   useEffect(() => {
     if (userInfo) {
-      router.push('/');
+      return router.push('/');
     }
   }, []);
 
@@ -63,9 +61,8 @@ export default function Login() {
       } else {
         const data = await response.json();
         dispatch({ type: 'USER_LOGIN', payload: data });
-        Cookies.set('userInfo', data);
-        router.push(redirect || '/');
-        return;
+
+        return router.push(redirect || '/');
       }
     } catch (error) {
       console.log('Backend failure');

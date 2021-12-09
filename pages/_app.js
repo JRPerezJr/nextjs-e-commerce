@@ -10,6 +10,7 @@ import { SnackbarProvider } from 'notistack';
 
 import { ToggleColorMode } from '../utils/ColorMode';
 import { StoreProvider } from '../utils/Store';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -29,7 +30,9 @@ function MyApp(props) {
       <CacheProvider value={emotionCache}>
         <ToggleColorMode>
           <StoreProvider>
-            <Component {...pageProps} />
+            <PayPalScriptProvider deferLoading={true}>
+              <Component {...pageProps} />
+            </PayPalScriptProvider>
           </StoreProvider>
         </ToggleColorMode>
       </CacheProvider>
