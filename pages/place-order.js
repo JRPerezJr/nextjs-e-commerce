@@ -63,10 +63,10 @@ function PlaceOrder() {
 
   useEffect(() => {
     if (!paymentMethod) {
-      router.push('/payment');
+      return router.push('/payment');
     }
     if (cartItems.length === 0) {
-      router.push('/cart');
+      return router.push('/cart');
     }
   }, []);
 

@@ -37,7 +37,7 @@ export default function Register() {
 
   useEffect(() => {
     if (userInfo) {
-      router.push('/');
+      return router.push('/');
     }
   }, []);
 
@@ -47,8 +47,7 @@ export default function Register() {
     closeSnackbar();
 
     if (password !== confirmPassword) {
-      enqueueSnackbar('Passwords must match', { variant: 'error' });
-      return;
+      return enqueueSnackbar('Passwords must match', { variant: 'error' });
     }
     try {
       const formData = { name, email, password };

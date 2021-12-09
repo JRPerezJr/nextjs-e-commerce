@@ -44,8 +44,7 @@ function CartScreen() {
       .then((res) => res.json())
       .then((data) => {
         if (data.countInStock < quantity) {
-          window.alert('Sorry. The product is currently out of stock');
-          return;
+          return window.alert('Sorry. The product is currently out of stock');
         }
       });
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });

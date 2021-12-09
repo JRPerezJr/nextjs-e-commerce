@@ -26,7 +26,6 @@ import {
 import useStyles from '../../utils/styles';
 
 import Layout from '../../components/Layout';
-// import CheckoutWizard from '../../components/checkoutWizard';
 
 import { getError } from '../../utils/error';
 

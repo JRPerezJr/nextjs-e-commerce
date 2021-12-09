@@ -50,8 +50,7 @@ const Profile = () => {
     closeSnackbar();
 
     if (password !== confirmPassword) {
-      enqueueSnackbar('Passwords must match', { variant: 'error' });
-      return;
+      return enqueueSnackbar('Passwords must match', { variant: 'error' });
     }
     try {
       const formData = { name, email, password };

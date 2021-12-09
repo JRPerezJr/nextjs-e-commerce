@@ -8,7 +8,7 @@ const handler = nc({
   onError,
 });
 
-handler.use(isAuth); // middleware
+handler.use(isAuth);
 
 handler.post(async (req, res) => {
   await db.connect();

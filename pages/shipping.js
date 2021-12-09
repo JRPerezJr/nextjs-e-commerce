@@ -29,7 +29,7 @@ export default function Shipping() {
 
   useEffect(() => {
     if (!userInfo) {
-      router.push('/login?redirect=/shipping');
+      return router.push('/login?redirect=/shipping');
     }
     const { fullName, address, city, homeState, zipCode, country } =
       shippingAddress;
