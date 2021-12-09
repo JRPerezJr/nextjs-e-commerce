@@ -1,7 +1,22 @@
+import bcrypt from 'bcryptjs';
+
 const dataStore = {
+  users: [
+    {
+      name: 'James',
+      email: 'jbond@jbond.com',
+      password: bcrypt.hashSync('licenseToKill'),
+      isAdmin: true,
+    },
+    {
+      name: 'Vesper',
+      email: 'vesper@vesper.com',
+      password: bcrypt.hashSync('manageYourMoneyWell'),
+      isAdmin: false,
+    },
+  ],
   products: [
     {
-      id: 1,
       slug: 'free-shirt',
       name: 'Free Shirt',
       category: 'Shirts',
@@ -14,7 +29,6 @@ const dataStore = {
       description: 'A popular shirt',
     },
     {
-      id: 2,
       slug: 'fit-shirt',
       name: 'Fit Shirt',
       category: 'Shirts',
@@ -27,7 +41,6 @@ const dataStore = {
       description: 'A popular shirt',
     },
     {
-      id: 3,
       slug: 'slim-shirt',
       name: 'Slim Shirt',
       category: 'Shirts',
@@ -40,7 +53,6 @@ const dataStore = {
       description: 'A popular shirt',
     },
     {
-      id: 4,
       slug: 'golf-pants',
       name: 'Golf Pants',
       category: 'Pants',
@@ -53,7 +65,6 @@ const dataStore = {
       description: 'Smart looking pants',
     },
     {
-      id: 5,
       slug: 'fit-pants',
       name: 'Fit pants',
       category: 'Pants',
@@ -66,7 +77,6 @@ const dataStore = {
       description: 'Popular pants',
     },
     {
-      id: 6,
       slug: 'classic-pants',
       name: 'Classic pants',
       category: 'Pants',

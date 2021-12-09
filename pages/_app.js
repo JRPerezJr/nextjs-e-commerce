@@ -1,19 +1,49 @@
 import '../styles/globals.css';
-import { useEffect } from 'react';
-import { StoreProvider } from '../utils/Store';
 
-function MyApp({ Component, pageProps }) {
-  useEffect(() => {
-    const jssStyles = document.querySelector('#jss-server-side');
-    if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles);
-    }
-  }, []);
+// import { useEffect } from 'react';
+import PropTypes from 'prop-types';
+
+import { CacheProvider } from '@emotion/react';
+import createEmotionCache from '../components/createEmotionCache';
+
+import { SnackbarProvider } from 'notistack';
+
+import { ToggleColorMode } from '../utils/ColorMode';
+import { StoreProvider } from '../utils/Store';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+
+// Client-side cache, shared for the whole session of the user in the browser.
+const clientSideEmotionCache = createEmotionCache();
+
+function MyApp(props) {
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+
+  // useEffect(() => {
+  //   const jssStyles = document.querySelector('#jss-server-side');
+  //   if (jssStyles) {
+  //     jssStyles.parentElement.removeChild(jssStyles);
+  //   }
+  // }, []);
+
   return (
-    <StoreProvider>
-      <Component {...pageProps} />
-    </StoreProvider>
+    <SnackbarProvider anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+      <CacheProvider value={emotionCache}>
+        <ToggleColorMode>
+          <StoreProvider>
+            <PayPalScriptProvider deferLoading={true}>
+              <Component {...pageProps} />
+            </PayPalScriptProvider>
+          </StoreProvider>
+        </ToggleColorMode>
+      </CacheProvider>
+    </SnackbarProvider>
   );
 }
 
 export default MyApp;
+
+MyApp.propTypes = {
+  Component: PropTypes.elementType.isRequired,
+  emotionCache: PropTypes.object,
+  pageProps: PropTypes.object.isRequired,
+};

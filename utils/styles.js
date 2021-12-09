@@ -1,7 +1,8 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
   navbar: {
+    marginBottom: 20,
     backgroundColor: '#203040',
     '& a': {
       color: '#ffffff',
@@ -19,11 +20,31 @@ const useStyles = makeStyles({
     minHeight: '80vh',
   },
   footer: {
+    marginTop: 10,
     textAlign: 'center',
+    padding: 20,
   },
   section: {
     marginTop: 10,
     marginBottom: 10,
+  },
+  form: {
+    width: '100%',
+    maxWidth: 800,
+    margin: '0 auto',
+  },
+  navbarButton: {
+    color: '#ffffff',
+    textTransform: 'initial',
+  },
+  transparentBackground: {
+    backgroundColor: 'transparent',
+  },
+  error: {
+    color: '#f04040',
+  },
+  fullWidth: {
+    width: '100%',
   },
 });
 

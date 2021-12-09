@@ -1,26 +1,42 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
+import { useRouter } from 'next/router';
+
+import { ColorModeContext } from '../utils/ColorMode';
+import { StoreContext } from '../utils/Store';
 
 import {
-  createTheme,
   AppBar,
   Container,
-  CssBaseline,
   Link,
-  Switch,
-  ThemeProvider,
+  // Switch,
   Toolbar,
   Typography,
-} from '@material-ui/core';
+  Badge,
+  Button,
+  Menu,
+  MenuItem,
+} from '@mui/material';
+
+import IconButton from '@mui/material/IconButton';
+
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+
+import CssBaseline from '@mui/material/CssBaseline';
+import { useTheme, createTheme, ThemeProvider } from '@mui/material/styles';
 
 import useStyles from '../utils/styles';
-import { Store } from '../utils/Store';
-import Cookies from 'js-cookie';
 
 export default function Layout({ title, description, children }) {
-  const { state, dispatch } = useContext(Store);
-  const { darkMode } = state;
+  const router = useRouter();
+
+  const nightTheme = useTheme();
+  const colorMode = useContext(ColorModeContext);
+
+  const { state, dispatch } = useContext(StoreContext);
+  const { cart, userInfo } = state;
 
   const theme = createTheme({
     typography: {
@@ -39,7 +55,7 @@ export default function Layout({ title, description, children }) {
       },
     },
     palette: {
-      type: darkMode ? 'dark' : 'light',
+      mode: nightTheme.palette.mode === 'light' ? 'dark' : 'light',
 
       primary: {
         main: '#f0c000',
@@ -51,11 +67,32 @@ export default function Layout({ title, description, children }) {
   });
   const classes = useStyles();
 
-  const darkModeChangeHandler = () => {
-    console.log('Clicked');
-    dispatch({ type: darkMode ? 'DARK_MODE_OFF' : 'DARK_MODE_ON' });
-    const newDarkMode = !darkMode;
-    Cookies.set('darkMode', newDarkMode ? 'ON' : 'OFF', { sameSite: 'strict' });
+  // const darkModeChangeHandler = () => {
+  // console.log('Clicked');
+  // dispatch({ type: darkMode ? 'DARK_MODE_OFF' : 'DARK_MODE_ON' });
+  // const newDarkMode = !darkMode;
+  // Cookies.set('darkMode', newDarkMode ? 'ON' : 'OFF', { sameSite: 'strict' });
+  // };
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const loginClickHandler = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+
+  const loginMenuCloseHandler = (e, redirect) => {
+    setAnchorEl(null);
+
+    if (redirect) {
+      router.push(redirect);
+    }
+  };
+
+  const logoutClickHandler = () => {
+    setAnchorEl(null);
+    dispatch({ type: 'USER_LOGOUT' });
+
+    router.push('/');
   };
 
   return (
@@ -77,17 +114,73 @@ export default function Layout({ title, description, children }) {
             </NextLink>
             <div className={classes.grow}></div>
             <div>
-              <Switch
+              {/* <Switch
                 checked={darkMode}
                 onChange={darkModeChangeHandler}
                 inputProps={{ 'aria-label': 'controlled' }}
-              ></Switch>
+              ></Switch> */}
+              <IconButton
+                sx={{ ml: 1 }}
+                onClick={colorMode.toggleColorMode}
+                color="inherit"
+              >
+                {nightTheme.palette.mode === 'dark' ? (
+                  <Brightness4Icon />
+                ) : (
+                  <Brightness7Icon />
+                )}
+              </IconButton>
               <NextLink href="/cart" passHref>
-                <Link>Cart</Link>
+                <Link>
+                  {cart.cartItems.length > 0 ? (
+                    <Badge
+                      color="secondary"
+                      badgeContent={cart.cartItems.length}
+                    >
+                      Cart
+                    </Badge>
+                  ) : (
+                    'Cart'
+                  )}
+                </Link>
               </NextLink>
-              <NextLink href="/login" passHref>
-                <Link>Login</Link>
-              </NextLink>
+              {userInfo ? (
+                <>
+                  <Button
+                    aria-controls="simple-menu"
+                    aria-haspopup="true"
+                    onClick={loginClickHandler}
+                    className={classes.navbarButton}
+                  >
+                    {userInfo.name}
+                  </Button>
+                  <Menu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={loginMenuCloseHandler}
+                  >
+                    <MenuItem
+                      onClick={(e) => loginMenuCloseHandler(e, '/profile')}
+                    >
+                      Profile
+                    </MenuItem>
+                    <MenuItem
+                      onClick={(e) =>
+                        loginMenuCloseHandler(e, '/order-history')
+                      }
+                    >
+                      Order History
+                    </MenuItem>
+                    <MenuItem onClick={logoutClickHandler}>Logout</MenuItem>
+                  </Menu>
+                </>
+              ) : (
+                <NextLink href="/login" passHref>
+                  <Link>Login</Link>
+                </NextLink>
+              )}
             </div>
           </Toolbar>
         </AppBar>
