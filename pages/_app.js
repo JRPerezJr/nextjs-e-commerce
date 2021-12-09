@@ -1,43 +1,32 @@
-import '../styles/globals.css';
-
-import PropTypes from 'prop-types';
-
-import { CacheProvider } from '@emotion/react';
-import createEmotionCache from '../utils/createEmotionCache';
+import Head from 'next/head';
 
 import { SnackbarProvider } from 'notistack';
 
-import { ToggleColorMode } from '../utils/ColorMode';
 import { StoreProvider } from '../utils/Store';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
-// Client-side cache, shared for the whole session of the user in the browser.
-const clientSideEmotionCache = createEmotionCache();
+import React from 'react';
 
 function MyApp(props) {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const { Component, pageProps } = props;
 
   return (
-    <CacheProvider value={emotionCache}>
+    <React.Fragment>
+      <Head>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+      </Head>
+
       <SnackbarProvider
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       >
-        <ToggleColorMode>
-          <StoreProvider>
-            <PayPalScriptProvider deferLoading={true}>
-              <Component {...pageProps} />
-            </PayPalScriptProvider>
-          </StoreProvider>
-        </ToggleColorMode>
+        <StoreProvider>
+          <PayPalScriptProvider deferLoading={true}>
+            <Component {...pageProps} />
+          </PayPalScriptProvider>
+        </StoreProvider>
       </SnackbarProvider>
-    </CacheProvider>
+    </React.Fragment>
   );
 }
 
 export default MyApp;
-
-MyApp.propTypes = {
-  Component: PropTypes.elementType.isRequired,
-  emotionCache: PropTypes.object,
-  pageProps: PropTypes.object.isRequired,
-};
