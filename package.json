@@ -20,29 +20,31 @@
     "lint": "next lint"
   },
   "dependencies": {
-
-    "@emotion/cache": "^11.4.0",
-    "@emotion/react": "^11.4.1",
-    "@emotion/server": "^11.4.0",
-    "@emotion/styled": "^11.3.0",
     "@mui/icons-material": "^5.0.1",
-    "@mui/material": "^5.0.2",
+    "@mui/material": "^5.2.3",
+    "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest",
+    "@mui/styled-engine-sc": "^5.1.0",
     "@mui/styles": "^5.0.1",
     "@paypal/react-paypal-js": "^7.5.0",
     "bcryptjs": "^2.4.3",
-
     "js-cookie": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.9",
     "next": "11.1.2",
     "next-connect": "^0.10.2",
+    "next-transpile-modules": "^9.0.0",
     "notistack": "^2.0.3",
     "prop-types": "^15.7.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-hook-form": "^7.20.5"
+    "react-hook-form": "^7.20.5",
+    "styled-components": "^5.3.3"
+  },
+  "resolutions": {
+    "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
   },
   "devDependencies": {
+    "babel-plugin-styled-components": "^2.0.2",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2"
   }
