@@ -26,9 +26,9 @@
 ## 📐 Prerequisites
 
 - Git
-- node 14.17.0
-- npm 6.14.13
-- yarn 1.22.10
+- node 14.17.0 or higher
+- npm 6.14.13 or higher
+- yarn 1.22.10 or higher
 
 ## 🖥 📱 💽 Tech Stack
 
